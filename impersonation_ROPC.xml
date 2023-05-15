@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+    PolicySchemaVersion="0.3.0.0"
+    TenantId="contosocorplabs.onmicrosoft.com"
+    PolicyId="B2C_1A_Impersonation_ROPC"
+    PublicPolicyUri="http://contosocorplabs.onmicrosoft.com/B2C_1A_signup_signin">
+
+    <BasePolicy>
+        <TenantId>contosocorplabs.onmicrosoft.com</TenantId>
+        <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+    </BasePolicy>
+
+    <RelyingParty>
+        <DefaultUserJourney ReferenceId="ResourceOwnerPasswordCredentials-Impersonation" />
+        <Endpoints>
+            <!--points
+      to refresh token journey when app makes refresh token request-->
+            <Endpoint Id="Token" UserJourneyReferenceId="ResourceOwnerPasswordCredentials-RedeemRefreshToken" />
+        </Endpoints>
+        <TechnicalProfile Id="PolicyProfile">
+            <DisplayName>PolicyProfile</DisplayName>
+            <Protocol Name="OpenIdConnect" />
+            <OutputClaims>
+                <OutputClaim ClaimTypeReferenceId="sub" />
+                <OutputClaim ClaimTypeReferenceId="objectId" />
+                <OutputClaim ClaimTypeReferenceId="displayName" DefaultValue="" />
+                <OutputClaim ClaimTypeReferenceId="givenName" DefaultValue="" />
+                <OutputClaim ClaimTypeReferenceId="surname" DefaultValue="" />
+
+            </OutputClaims>
+            <SubjectNamingInfo ClaimType="sub" />
+        </TechnicalProfile>
+    </RelyingParty>
+</TrustFrameworkPolicy>
